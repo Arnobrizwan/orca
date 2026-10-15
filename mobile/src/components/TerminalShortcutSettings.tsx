@@ -294,6 +294,7 @@ export function TerminalShortcutSettings({
                     pressed && styles.deleteButtonPressed
                   ]}
                   onPress={() => handleDeleteCustomKey(key)}
+                  accessibilityLabel={`Remove ${key.label}`}
                 >
                   <X size={16} color={colors.statusRed} />
                 </Pressable>
