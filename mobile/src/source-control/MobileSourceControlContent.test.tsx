@@ -318,9 +318,18 @@ describe('commit message during AI generation', () => {
     render()
     const input = () => renderer?.root.find((node) => String(node.type) === 'TextInput')
     expect(input()?.props.editable).toBe(true)
+    const actions = () =>
+      renderer?.root.find(
+        (node) =>
+          String(node.type) === 'Pressable' &&
+          node.props.accessibilityLabel === 'Open source control actions'
+      )
+    expect(actions()?.props.disabled).toBe(false)
     patch({ generatingMessage: true })
     expect(input()?.props.editable).toBe(false)
+    expect(actions()?.props.disabled).toBe(true)
     patch({ generatingMessage: false })
     expect(input()?.props.editable).toBe(true)
+    expect(actions()?.props.disabled).toBe(false)
   })
 })
