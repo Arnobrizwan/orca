@@ -196,8 +196,11 @@ export function useMobileTasksTaskPaginationActions(model: TaskListLoadingModel)
           setError(err instanceof Error ? err.message : 'Failed to load more GitHub tasks')
         }
       } finally {
-        setGithubPaginationLoading(false)
-        setGithubLoadingTargetPage(null)
+        // Why: a superseded page leaves the lock for the reloading list to release.
+        if (isCurrent()) {
+          setGithubPaginationLoading(false)
+          setGithubLoadingTargetPage(null)
+        }
       }
     },
     [

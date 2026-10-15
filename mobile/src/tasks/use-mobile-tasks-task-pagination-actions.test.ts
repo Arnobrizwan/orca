@@ -97,6 +97,7 @@ describe('GitHub task pagination', () => {
     })
     expect(harness.setGithubPages).toHaveBeenCalledTimes(1)
     expect(harness.setItems).toHaveBeenCalledWith(nextPage.items)
+    expect(harness.setGithubPaginationLoading).toHaveBeenLastCalledWith(false)
   })
 
   it('drops a page that arrives after the list was reloaded for a new selection', async () => {
@@ -109,6 +110,7 @@ describe('GitHub task pagination', () => {
     })
     expect(harness.setGithubPages).not.toHaveBeenCalled()
     expect(harness.setItems).not.toHaveBeenCalled()
-    expect(harness.setGithubPaginationLoading).toHaveBeenLastCalledWith(false)
+    // The reloading list releases the pagination lock, so a superseded page must not.
+    expect(harness.setGithubPaginationLoading).not.toHaveBeenCalledWith(false)
   })
 })
