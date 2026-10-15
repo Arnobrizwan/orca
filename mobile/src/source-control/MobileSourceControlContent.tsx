@@ -227,7 +227,13 @@ export function MobileSourceControlContent({ state }: Props) {
               onChangeText={setCommitMessage}
               placeholder="Commit message"
               placeholderTextColor={colors.textMuted}
-              editable={busyAction === null && openingPath === null && openingBranchPath === null}
+              // Why: the AI reply replaces the whole message, so typing during generation is lost.
+              editable={
+                busyAction === null &&
+                !generatingMessage &&
+                openingPath === null &&
+                openingBranchPath === null
+              }
               returnKeyType="done"
               onSubmitEditing={primaryAction.onPress}
             />
